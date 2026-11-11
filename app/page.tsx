@@ -1,11 +1,27 @@
 import { neon } from '@neondatabase/serverless';
 import { revalidatePath } from 'next/cache';
+import { Suspense } from 'react';
 
 const sql = neon(process.env.DATABASE_URL!);
 
-export default async function Home() {
+// Деректерді оқитын бөлікті жеке компонентке бөлу
+async function MessageList() {
   const messages = await sql`SELECT * FROM messages ORDER BY id DESC`;
+  return (
+    <div>
+      {messages.map((item) => (
+        <div
+          key={item.id}
+          style={{ padding: '12px', marginTop: '10px', background: '#eeeeee', borderRadius: '5px' }}
+        >
+          {item.message}
+        </div>
+      ))}
+    </div>
+  );
+}
 
+export default function Home() {
   async function addMessage(formData: FormData) {
     'use server';
     const message = String(formData.get('message') ?? '').trim();
@@ -32,14 +48,10 @@ export default async function Home() {
       </form>
 
       <h2>Хабарламалар тізімі</h2>
-      {messages.map((item) => (
-        <div
-          key={item.id}
-          style={{ padding: '12px', marginTop: '10px', background: '#eeeeee', borderRadius: '5px' }}
-        >
-          {item.message}
-        </div>
-      ))}
+      {/* Деректерді оқитын компонентті Suspense ішіне орау */}
+      <Suspense fallback={<p>Хабарламалар жүктелуде...</p>}>
+        <MessageList />
+      </Suspense>
     </main>
   );
 }

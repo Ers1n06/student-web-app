@@ -36,14 +36,34 @@ export default function Home() {
       <h1>Менің алғашқы веб-қосымшам</h1>
       <p>Бұл қосымша Neon бұлттық деректер қорымен жұмыс істейді.</p>
 
-      <form action={addMessage} style={{ marginBottom: '20px' }}>
+      <form action={addMessage} style={{ display: 'flex', marginBottom: '20px' }}>
         <input
           name="message"
           placeholder="Хабарлама енгізіңіз"
           required
-          style={{ padding: '12px', width: '70%', marginRight: '10px', color: 'black' }}
+          style={{ 
+            padding: '12px', 
+            flexGrow: 1, 
+            marginRight: '10px', 
+            color: 'black', 
+            backgroundColor: 'white', 
+            border: '1px solid #ccc', 
+            borderRadius: '4px' 
+          }}
         />
-        <button type="submit" style={{ padding: '12px' }}>Сақтау</button>
+        <button 
+          type="submit" 
+          style={{ 
+            padding: '12px 24px', 
+            backgroundColor: 'white', 
+            color: 'black', 
+            border: '1px solid #ccc', 
+            borderRadius: '4px', 
+            cursor: 'pointer' 
+          }}
+        >
+          Сақтау
+        </button>
       </form>
 
       <h2>Хабарламалар тізімі</h2>

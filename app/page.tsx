@@ -4,7 +4,6 @@ import { Suspense } from 'react';
 
 const sql = neon(process.env.DATABASE_URL!);
 
-// Деректерді оқитын бөлікті жеке компонентке бөлу
 async function MessageList() {
   const messages = await sql`SELECT * FROM messages ORDER BY id DESC`;
   return (
@@ -12,7 +11,7 @@ async function MessageList() {
       {messages.map((item) => (
         <div
           key={item.id}
-          style={{ padding: '12px', marginTop: '10px', background: '#eeeeee', borderRadius: '5px' }}
+          style={{ padding: '12px', marginTop: '10px', background: '#eeeeee', color: 'black', borderRadius: '5px' }}
         >
           {item.message}
         </div>
@@ -37,19 +36,18 @@ export default function Home() {
       <h1>Менің алғашқы веб-қосымшам</h1>
       <p>Бұл қосымша Neon бұлттық деректер қорымен жұмыс істейді.</p>
 
-      <form action={addMessage}>
+      <form action={addMessage} style={{ marginBottom: '20px' }}>
         <input
           name="message"
           placeholder="Хабарлама енгізіңіз"
           required
-          style={{ padding: '12px', width: '70%', marginRight: '10px' }}
+          style={{ padding: '12px', width: '70%', marginRight: '10px', color: 'black' }}
         />
-        <button type="submit">Сақтау</button>
+        <button type="submit" style={{ padding: '12px' }}>Сақтау</button>
       </form>
 
       <h2>Хабарламалар тізімі</h2>
-      {/* Деректерді оқитын компонентті Suspense ішіне орау */}
-      <Suspense fallback={<p>Хабарламалар жүктелуде...</p>}>
+      <Suspense fallback={<p style={{ color: 'black' }}>Хабарламалар жүктелуде...</p>}>
         <MessageList />
       </Suspense>
     </main>
